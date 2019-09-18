@@ -55,97 +55,103 @@
         "name": "[concat(variables('namespace'),'vs-loop')]",
         "count": "[variables('vsSetCount')]"
       },
-      "sku": {
-        "name": "Aligned"
-      }
-    },
-    {
-      "condition": "[greater(parameters('storageSettings').dataDisks, 0)]",
-      "name": "[concat(variables('namespace'), copyindex(), '-vm-creation')]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2019-05-01",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), mod(copyindex(),variables('vsSetCount')), '-vs-set')]"
-      ],
-      "copy": {
-        "name": "[concat(variables('namespace'),'vm-creation-loop')]",
-        "count": "[parameters('vm').count]"
-      },
       "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[uri(parameters('_artifactsLocation'), concat('partials/vm.json', parameters('_artifactsLocationSasToken')))]",
-          "contentVersion": "1.0.0.0"
+        "largeScaleEnabled": "true",
+        "overprovision": "true",
+        "upgradePolicy": {
+          "mode": "Manual"
         },
-        "parameters": {
-          "vm": {
-            "value": "[parameters('vm')]"
+        "sku": {
+          "name": "Aligned"
+        }
+      },
+      {
+        "condition": "[greater(parameters('storageSettings').dataDisks, 0)]",
+        "name": "[concat(variables('namespace'), copyindex(), '-vm-creation')]",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2019-05-01",
+        "dependsOn": [
+          "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), mod(copyindex(),variables('vsSetCount')), '-vs-set')]"
+        ],
+        "copy": {
+          "name": "[concat(variables('namespace'),'vm-creation-loop')]",
+          "count": "[parameters('vm').count]"
+        },
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[uri(parameters('_artifactsLocation'), concat('partials/vm.json', parameters('_artifactsLocationSasToken')))]",
+            "contentVersion": "1.0.0.0"
           },
-          "index": {
-            "value": "[copyindex()]"
-          },
-          "virtualMachineScaleSet": {
-            "value": "[concat(variables('namespace'), mod(copyindex(),variables('vsSetCount')), '-vs-set')]"
-          },
-          "dataDisks": {
-            "value": {
-              "copy": [
-                {
-                  "name": "disks",
-                  "count": "[variables('diskCount')]",
-                  "input": {
-                    "name": "[concat(variables('namespace'), copyindex(), '-datadisk', copyIndex('disks', 1))]",
-                    "diskSizeGB": "[parameters('storageSettings').diskSize]",
-                    "lun": "[copyIndex('disks')]",
-                    "managedDisk": {
-                      "storageAccountType": "[parameters('storageSettings').accountType]"
-                    },
-                    "caching": "None",
-                    "createOption": "Empty"
+          "parameters": {
+            "vm": {
+              "value": "[parameters('vm')]"
+            },
+            "index": {
+              "value": "[copyindex()]"
+            },
+            "virtualMachineScaleSet": {
+              "value": "[concat(variables('namespace'), mod(copyindex(),variables('vsSetCount')), '-vs-set')]"
+            },
+            "dataDisks": {
+              "value": {
+                "copy": [
+                  {
+                    "name": "disks",
+                    "count": "[variables('diskCount')]",
+                    "input": {
+                      "name": "[concat(variables('namespace'), copyindex(), '-datadisk', copyIndex('disks', 1))]",
+                      "diskSizeGB": "[parameters('storageSettings').diskSize]",
+                      "lun": "[copyIndex('disks')]",
+                      "managedDisk": {
+                        "storageAccountType": "[parameters('storageSettings').accountType]"
+                      },
+                      "caching": "None",
+                      "createOption": "Empty"
+                    }
                   }
-                }
-              ]
+                ]
+              }
+            },
+            "elasticTags": {
+              "value": "[parameters('elasticTags')]"
             }
-          },
-          "elasticTags": {
-            "value": "[parameters('elasticTags')]"
           }
         }
-      }
-    },
-    {
-      "condition": "[equals(parameters('storageSettings').dataDisks, 0)]",
-      "name": "[concat(variables('namespace'), copyindex(), '-vm-nodisks-creation')]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2019-05-01",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), mod(copyindex(),variables('vsSetCount')), '-vs-set')]"
-      ],
-      "copy": {
-        "name": "[concat(variables('namespace'),'vm-creation-loop')]",
-        "count": "[parameters('vm').count]"
       },
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[uri(parameters('_artifactsLocation'), concat('partials/vm.json', parameters('_artifactsLocationSasToken')))]",
-          "contentVersion": "1.0.0.0"
+      {
+        "condition": "[equals(parameters('storageSettings').dataDisks, 0)]",
+        "name": "[concat(variables('namespace'), copyindex(), '-vm-nodisks-creation')]",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2019-05-01",
+        "dependsOn": [
+          "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), mod(copyindex(),variables('vsSetCount')), '-vs-set')]"
+        ],
+        "copy": {
+          "name": "[concat(variables('namespace'),'vm-creation-loop')]",
+          "count": "[parameters('vm').count]"
         },
-        "parameters": {
-          "vm": {
-            "value": "[parameters('vm')]"
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[uri(parameters('_artifactsLocation'), concat('partials/vm.json', parameters('_artifactsLocationSasToken')))]",
+            "contentVersion": "1.0.0.0"
           },
-          "index": {
-            "value": "[copyindex()]"
-          },
-          "virtualMachineScaleSet": {
-            "value": "[concat(variables('namespace'), mod(copyindex(),variables('vsSetCount')), '-vs-set')]"
-          },
-          "elasticTags": {
-            "value": "[parameters('elasticTags')]"
+          "parameters": {
+            "vm": {
+              "value": "[parameters('vm')]"
+            },
+            "index": {
+              "value": "[copyindex()]"
+            },
+            "virtualMachineScaleSet": {
+              "value": "[concat(variables('namespace'), mod(copyindex(),variables('vsSetCount')), '-vs-set')]"
+            },
+            "elasticTags": {
+              "value": "[parameters('elasticTags')]"
+            }
           }
         }
       }
-    }
   ]
 }
