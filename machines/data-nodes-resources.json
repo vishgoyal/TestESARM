@@ -11,7 +11,7 @@
     "_artifactsLocationSasToken": {
       "type": "securestring",
       "metadata": {
-        "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated. Use the defaultValue if the staging location is not secured."
+          "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated. Use the defaultValue if the staging location is not secured."
       },
       "defaultValue": ""
     },
@@ -39,21 +39,21 @@
   },
   "variables": {
     "namespace": "[parameters('vm').namespace]",
-    "scSetCount": "[add(div(sub(parameters('vm').count, 1), 100), 1)]",
+    "avSetCount": "[add(div(sub(parameters('vm').count, 1), 100), 1)]",
     "diskCount": "[if(greater(parameters('storageSettings').dataDisks, 0), parameters('storageSettings').dataDisks, 1)]"
   },
   "resources": [
     {
       "apiVersion": "2019-03-01",
-      "type": "Microsoft.Compute/virtualMachineScaleSets",
-      "name": "[concat(variables('namespace'), copyindex(), '-sc-set')]",
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "[concat(variables('namespace'), copyindex(), '-av-set')]",
       "location": "[parameters('vm').shared.location]",
       "tags": {
         "provider": "[toUpper(parameters('elasticTags').provider)]"
       },
       "copy": {
-        "name": "[concat(variables('namespace'),'sc-loop')]",
-        "count": "[variables('scSetCount')]"
+        "name": "[concat(variables('namespace'),'av-loop')]",
+        "count": "[variables('avSetCount')]"
       },
       "properties": {
         "platformUpdateDomainCount": 20,
@@ -69,7 +69,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-05-01",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), mod(copyindex(),variables('scSetCount')), '-sc-set')]"
+        "[concat('Microsoft.Compute/availabilitySets/', variables('namespace'), mod(copyindex(),variables('avSetCount')), '-av-set')]"
       ],
       "copy": {
         "name": "[concat(variables('namespace'),'vm-creation-loop')]",
@@ -88,8 +88,8 @@
           "index": {
             "value": "[copyindex()]"
           },
-          "virtualMachineScaleSet": {
-            "value": "[concat(variables('namespace'), mod(copyindex(),variables('scSetCount')), '-sc-set')]"
+          "availabilitySet": {
+            "value": "[concat(variables('namespace'), mod(copyindex(),variables('avSetCount')), '-av-set')]"
           },
           "dataDisks": {
             "value": {
@@ -123,7 +123,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-05-01",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), mod(copyindex(),variables('scSetCount')), '-sc-set')]"
+        "[concat('Microsoft.Compute/availabilitySets/', variables('namespace'), mod(copyindex(),variables('avSetCount')), '-av-set')]"
       ],
       "copy": {
         "name": "[concat(variables('namespace'),'vm-creation-loop')]",
@@ -142,8 +142,8 @@
           "index": {
             "value": "[copyindex()]"
           },
-          "virtualMachineScaleSet": {
-            "value": "[concat(variables('namespace'), mod(copyindex(),variables('scSetCount')), '-sc-set')]"
+          "availabilitySet": {
+            "value": "[concat(variables('namespace'), mod(copyindex(),variables('avSetCount')), '-av-set')]"
           },
           "elasticTags": {
             "value": "[parameters('elasticTags')]"
