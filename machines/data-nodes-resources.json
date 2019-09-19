@@ -48,6 +48,11 @@
   },
   "variables": {
     "namespace": "[parameters('vm').namespace]",
+    "password_osProfile": {
+      "computername": "[variables('computername')]",
+      "adminUsername": "[parameters('vm').shared.credentials.adminUsername]",
+      "adminPassword": "[parameters('vm').shared.credentials.password]"
+    },
     "vsSetCount": "[add(div(sub(parameters('vm').count, 1), 100), 1)]",
     "diskCount": "[if(greater(parameters('storageSettings').dataDisks, 0), parameters('storageSettings').dataDisks, 1)]"
   },
