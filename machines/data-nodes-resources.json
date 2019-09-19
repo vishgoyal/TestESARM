@@ -84,7 +84,7 @@
             },
             "dataDisks": "[parameters('dataDisks').disks]"
           },
-          "osProfile": "[variables('osProfile')]",
+          "osProfile": "[variables(concat(parameters('vm').shared.credentials.authenticationType, '_osProfile'))]",
           "networkProfile": {
             "networkInterfaces": [
               {
