@@ -115,7 +115,7 @@
           "networkProfile": {
             "networkInterfaces": [
               {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('namespace'), parameters('index'), '-nic'))]"
+                "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('namespace'), copyIndex(), '-nic'))]"
               }
             ]
           },
@@ -123,7 +123,7 @@
           "extensionProfile": {
             "extensions": [
               {
-                "name": "[concat(variables('namespace'), parameters('index'), '/script')]",
+                "name": "[concat(variables('namespace'), copyIndex(), '/script')]",
                 "properties": "[parameters('vm').installScript]"
               }
             ]
