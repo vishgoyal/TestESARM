@@ -90,13 +90,7 @@
               "caching": "ReadWrite",
               "createOption": "FromImage"
             },
-            "dataDisks": {
-              "value": {
-                "copy": [
-                  {
-                    "name": "disks",
-                    "count": "[variables('diskCount')]",
-                    "input": {
+            "dataDisks": [ {
                       "name": "[concat(variables('namespace'), copyindex(), '-datadisk', copyIndex('disks', 1))]",
                       "diskSizeGB": "[parameters('storageSettings').diskSize]",
                       "lun": "[copyIndex('disks')]",
@@ -106,10 +100,7 @@
                       "caching": "None",
                       "createOption": "Empty"
                     }
-                  }
-                ]
-              }
-            }
+            ]
           },
           "osProfile": "[variables(concat(parameters('vm').shared.credentials.authenticationType, '_osProfile'))]",
           "networkProfile": {
