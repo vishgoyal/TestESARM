@@ -23,7 +23,7 @@
     },
     "index": {
       "type": "int",
-      "value": "[copyindex()]",
+      "value": "",
       "metadata": {
         "description": "the outer loop index"
       }
@@ -76,7 +76,7 @@
           "storageProfile": {
             "imageReference": "[parameters('vm').imageReference]",
             "osDisk": {
-              "name": "[concat(variables('namespace'), parameters('index'), '-osdisk')]",
+              "name": "[concat(variables('namespace'), copyIndex(), '-osdisk')]",
               "managedDisk": {
                 "storageAccountType": "[parameters('vm').storageAccountType]"
               },
