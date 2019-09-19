@@ -27,6 +27,15 @@
         "description": "Storage Account Settings"
       }
     },
+    "dataDisks": {
+      "type": "object",
+      "defaultValue": {
+        "disks": []
+      },
+      "metadata": {
+        "description": "additional data disks to attach"
+      }
+    },
     "elasticTags": {
       "type": "object",
       "defaultValue": {
@@ -76,7 +85,26 @@
               "caching": "ReadWrite",
               "createOption": "FromImage"
             },
-            "dataDisks": "[parameters('dataDisks').disks]"
+            "dataDisks": {
+              "value": {
+                "copy": [
+                  {
+                    "name": "disks",
+                    "count": "[variables('diskCount')]",
+                    "input": {
+                      "name": "[concat(variables('namespace'), copyindex(), '-datadisk', copyIndex('disks', 1))]",
+                      "diskSizeGB": "[parameters('storageSettings').diskSize]",
+                      "lun": "[copyIndex('disks')]",
+                      "managedDisk": {
+                        "storageAccountType": "[parameters('storageSettings').accountType]"
+                      },
+                      "caching": "None",
+                      "createOption": "Empty"
+                    }
+                  }
+                ]
+              }
+            }
           },
           "osProfile": "[variables(concat(parameters('vm').shared.credentials.authenticationType, '_osProfile'))]",
           "networkProfile": {
