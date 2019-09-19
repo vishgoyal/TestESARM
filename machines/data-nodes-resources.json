@@ -21,6 +21,12 @@
         "description": "vm configuration"
       }
     },
+    "index": {
+      "type": "int",
+      "metadata": {
+        "description": "the outer loop index"
+      }
+    },
     "storageSettings": {
       "type": "object",
       "metadata": {
