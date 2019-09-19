@@ -23,6 +23,7 @@
     },
     "index": {
       "type": "int",
+      "value": "[copyindex()]",
       "metadata": {
         "description": "the outer loop index"
       }
