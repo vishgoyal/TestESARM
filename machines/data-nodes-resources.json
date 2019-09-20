@@ -68,7 +68,7 @@
         "name": "[concat(variables('namespace'),'vs-loop')]",
         "count": "[variables('vsSetCount')]"
       },
-      "name": "[concat(variables('namespace'), copyindex(concat(variables('namespace'),'vs-loop')), '-vs-set')]",
+      "name": "[concat(variables('namespace'), '-vs-set')]",
       "sku": {
         "name": "Aligned",
         "tier": "Standard",
@@ -131,7 +131,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-05-01",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), mod(copyindex(),variables('vsSetCount')), '-vs-set')]"
+        "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), '-vs-set')]"
       ],
       "copy": {
         "name": "[concat(variables('namespace'),'vm-creation-loop')]",
@@ -151,7 +151,7 @@
             "value": "[copyindex()]"
           },
           "virtualMachineScaleSet": {
-            "value": "[concat(variables('namespace'), mod(copyindex(),variables('vsSetCount')), '-vs-set')]"
+            "value": "[concat(variables('namespace'), 'vs-set')]"
           },
           "dataDisks": {
             "value": {
@@ -185,7 +185,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-05-01",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), mod(copyindex(),variables('vsSetCount')), '-vs-set')]"
+        "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), '-vs-set')]"
       ],
       "copy": {
         "name": "[concat(variables('namespace'),'vm-creation-loop')]",
@@ -205,7 +205,7 @@
             "value": "[copyindex()]"
           },
           "virtualMachineScaleSet": {
-            "value": "[concat(variables('namespace'), mod(copyindex(),variables('vsSetCount')), '-vs-set')]"
+            "value": "[concat(variables('namespace'), '-vs-set')]"
           },
           "elasticTags": {
             "value": "[parameters('elasticTags')]"
