@@ -404,7 +404,7 @@
     },
     "vmSizeLogstash": {
       "type": "string",
-      "defaultValue": "Standard_D1",
+      "defaultValue": "Standard_A2",
       "allowedValues": [
         "Standard_A0",
         "Standard_A1",
@@ -611,7 +611,7 @@
     },
     "vmSizeDataNodes": {
       "type": "string",
-      "defaultValue": "Standard_D1",
+      "defaultValue": "Standard_A1",
       "allowedValues": [
         "Standard_A0",
         "Standard_A1",
@@ -756,7 +756,7 @@
     },
     "vmDataDiskCount": {
       "type": "int",
-      "defaultValue": 64,
+      "defaultValue": 1,
       "minValue": 0,
       "metadata": {
         "description": "Number of disks to attach to each data node in RAID 0 setup. If the number of disks selected is more than can be attached to the data node VM size, the maximum number of disks that can be attached will be used. If 1 disk is selected, it is not RAIDed. If 0 disks are selected, the temporary disk will be used to store Elasticsearch data. IMPORTANT: The temporary disk is ephemeral in nature so be sure you know the trade-offs when choosing 0 disks."
@@ -764,7 +764,7 @@
     },
     "vmDataDiskSize": {
       "type": "string",
-      "defaultValue": "1TiB",
+      "defaultValue": "32GiB",
       "allowedValues": [
         "32GiB",
         "64GiB",
@@ -814,7 +814,7 @@
     },
     "vmSizeMasterNodes": {
       "type": "string",
-      "defaultValue": "Standard_D1",
+      "defaultValue": "Standard_A1",
       "allowedValues": [
         "Standard_A0",
         "Standard_A1",
@@ -967,7 +967,7 @@
     },
     "vmSizeClientNodes": {
       "type": "string",
-      "defaultValue": "Standard_D1",
+      "defaultValue": "Standard_A1",
       "allowedValues": [
         "Standard_A0",
         "Standard_A1",
