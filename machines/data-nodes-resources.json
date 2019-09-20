@@ -60,7 +60,6 @@
     {
       "apiVersion": "2019-03-01",
       "type": "Microsoft.Compute/virtualMachineScaleSets",
-      "name": "[concat(variables('namespace'), copyindex(), '-vs-set')]",
       "location": "[parameters('vm').shared.location]",
       "tags": {
         "provider": "[toUpper(parameters('elasticTags').provider)]"
@@ -69,6 +68,7 @@
         "name": "[concat(variables('namespace'),'vs-loop')]",
         "count": "[variables('vsSetCount')]"
       },
+      "name": "[concat(variables('namespace'), copyindex([concat(variables('namespace'),'vs-loop')]), '-vs-set')]",
       "sku": {
         "name": "Aligned",
         "tier": "Standard",
@@ -90,16 +90,17 @@
               "caching": "ReadWrite",
               "createOption": "FromImage"
             },
-            "dataDisks": [ {
-                      "name": "[concat(variables('namespace'), copyindex(), '-datadisk', copyIndex('disks', 1))]",
-                      "diskSizeGB": "[parameters('storageSettings').diskSize]",
-                      "lun": "[copyIndex('disks')]",
-                      "managedDisk": {
-                        "storageAccountType": "[parameters('storageSettings').accountType]"
-                      },
-                      "caching": "None",
-                      "createOption": "Empty"
-                    }
+            "dataDisks": [
+              {
+                "name": "[concat(variables('namespace'), copyindex(), '-datadisk', copyIndex('disks', 1))]",
+                "diskSizeGB": "[parameters('storageSettings').diskSize]",
+                "lun": "[copyIndex('disks')]",
+                "managedDisk": {
+                  "storageAccountType": "[parameters('storageSettings').accountType]"
+                },
+                "caching": "None",
+                "createOption": "Empty"
+              }
             ]
           },
           "osProfile": "[variables(concat(parameters('vm').shared.credentials.authenticationType, '_osProfile'))]",
