@@ -90,40 +90,10 @@ done
 # Install Oracle Java
 install_java()
 {
-    if [ -f "jdk-8u201-linux-x64.tar.gz" ];
-    then
-        log "Java already downloaded"
-        return
-    fi
-    
-    log "Installing Java"
-    RETRY=0
-    MAX_RETRY=5
-    while [ $RETRY -lt $MAX_RETRY ]; do
-        log "Retry $RETRY: downloading jdk-8u201-linux-x64.tar.gz"
-        wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn-pub/java/jdk/8u201-b09/42970487e3af4f5aa5bca3f542482c60/jdk-8u201-linux-x64.tar.gz
-        if [ $? -ne 0 ]; then
-            let RETRY=RETRY+1
-        else
-            break
-        fi
-    done
-    if [ $RETRY -eq $MAX_RETRY ]; then
-        log "Failed to download jdk-8u201-linux-x64.tar.gz"
-        exit 1
-    fi
-    
-    tar xzf jdk-8u201-linux-x64.tar.gz -C /var/lib
-    export JAVA_HOME=/var/lib/jdk1.8.0_201
-    export PATH=$PATH:$JAVA_HOME/bin
-    log "JAVA_HOME: $JAVA_HOME"
-    log "PATH: $PATH"
-    
-    java -version
-    if [ $? -ne 0 ]; then
-        log "Java installation failed"
-        exit 1
-    fi
+    log "installing java"
+    (apt-get -yq install openjdk-8-jdk || (sleep 15; apt-get -yq install openjdk-8-jdk))
+    command -v java >/dev/null 2>&1 || { log "java did not get installed" >&2; exit 50; }
+    log "installed java"
 }
 
 install_es()
