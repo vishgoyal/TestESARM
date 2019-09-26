@@ -129,7 +129,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-05-01",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), '-vs-set')]"
+        "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), 'vs-set')]"
       ],
       "copy": {
         "name": "[concat(variables('namespace'),'vm-creation-loop')]",
@@ -183,7 +183,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-05-01",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), '-vs-set')]"
+        "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namespace'), 'vs-set')]"
       ],
       "copy": {
         "name": "[concat(variables('namespace'),'vm-creation-loop')]",
