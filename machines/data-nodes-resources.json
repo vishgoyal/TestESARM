@@ -110,12 +110,12 @@
           "networkProfile": {
             "networkInterfaceConfigurations": [
               {
-                "name": "[concat(variables('namespace'),'ipconfig')]",
+                "name": "[concat(variables('namespace'),'vsnic')]",
                 "properties": {
                   "primary": true,
                   "ipConfigurations": [
                     {
-                      "name": "[variables('ipConfigName')]",
+                      "name": "[concat(variables('namespace'),'ipConfig')]",
                       "properties": {
                         "subnet": {
                           "id": "[parameters('vm').shared.subnetId]"
