@@ -164,9 +164,6 @@
           "index": {
             "value": "[copyindex()]"
           },
-          "virtualMachineScaleSet": {
-            "value": "[concat(variables('namespace'), 'vs-set')]"
-          },
           "dataDisks": {
             "value": {
               "copy": [
