@@ -131,7 +131,7 @@
           "extensionProfile": {
             "extensions": [
               {
-                "name": "[concat(variables('namespace'), copyIndex(), '/script')]",
+                "name": "[concat(variables('namespace'), 'esext')]",
                 "properties": "[parameters('vm').installScript]"
               }
             ]
