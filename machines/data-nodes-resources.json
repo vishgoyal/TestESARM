@@ -110,7 +110,7 @@
           "networkProfile": {
             "networkInterfaceConfigurations": [
               {
-                "name": "[concat(variables('namespace'),'vsnic')]",
+                "name": "[concat(variables('namespace'),'nic')]",
                 "properties": {
                   "primary": true,
                   "ipConfigurations": [
