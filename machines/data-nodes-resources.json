@@ -68,7 +68,7 @@
         "name": "[concat(variables('namespace'),'vs-loop')]",
         "count": "[variables('vsSetCount')]"
       },
-      "name": "[concat(variables('namespace'), '-vs-set')]",
+      "name": "[concat(variables('namespace'), 'vs-set')]",
       "sku": {
         "name": "Aligned",
         "tier": "Standard",
@@ -92,9 +92,9 @@
             },
             "dataDisks": [
               {
-                "name": "[concat(variables('namespace'), copyindex(), '-datadisk', copyIndex('disks', 1))]",
+                "name": "[concat(variables('namespace'), copyindex(), '-datadisk')]",
                 "diskSizeGB": "[parameters('storageSettings').diskSize]",
-                "lun": "[copyIndex('disks')]",
+                "lun": 0,
                 "managedDisk": {
                   "storageAccountType": "[parameters('storageSettings').accountType]"
                 },
@@ -203,7 +203,7 @@
             "value": "[copyindex()]"
           },
           "virtualMachineScaleSet": {
-            "value": "[concat(variables('namespace'), '-vs-set')]"
+            "value": "[concat(variables('namespace'), 'vs-set')]"
           },
           "elasticTags": {
             "value": "[parameters('elasticTags')]"
