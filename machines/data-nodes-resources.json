@@ -91,7 +91,6 @@
             },
             "dataDisks": [
               {
-                "name": "[concat(variables('namespace'), copyindex(), '-datadisk')]",
                 "diskSizeGB": "[parameters('storageSettings').diskSize]",
                 "lun": 0,
                 "managedDisk": {
