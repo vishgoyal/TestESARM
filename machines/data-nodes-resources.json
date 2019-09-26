@@ -101,7 +101,11 @@
               }
             ]
           },
-          "osProfile": "[variables(concat(parameters('vm').shared.credentials.authenticationType, '_osProfile'))]",
+          "osProfile": {
+            "computerNamePrefix": "vms",
+            "adminUsername": "[parameters('vm').shared.credentials.adminUsername]",
+            "adminPassword": "[parameters('vm').shared.credentials.password]"
+          },
           "networkProfile": {
             "networkInterfaces": [
               {
