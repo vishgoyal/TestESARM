@@ -54,6 +54,7 @@
       "adminPassword": "[parameters('vm').shared.credentials.password]"
     },
     "vsSetCount": "[add(div(sub(parameters('vm').count, 1), 100), 1)]",
+    "nicName": "[concat(variables('namespace'), '-nic')]",
     "diskCount": "[if(greater(parameters('storageSettings').dataDisks, 0), parameters('storageSettings').dataDisks, 1)]"
   },
   "resources": [
@@ -107,9 +108,22 @@
             "adminPassword": "[parameters('vm').shared.credentials.password]"
           },
           "networkProfile": {
-            "networkInterfaces": [
+            "networkInterfaceConfigurations": [
               {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('namespace'), copyIndex(), '-nic'))]"
+                "name": "[concat(variables('namespace'),'ipconfig')]",
+                "properties": {
+                  "primary": true,
+                  "ipConfigurations": [
+                    {
+                      "name": "[variables('ipConfigName')]",
+                      "properties": {
+                        "subnet": {
+                          "id": "[parameters('vm').shared.subnetId]"
+                        }
+                      }
+                    }
+                  ]
+                }
               }
             ]
           },
