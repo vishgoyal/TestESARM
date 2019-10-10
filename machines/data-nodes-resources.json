@@ -143,7 +143,6 @@
               },
               {
                 "name": "[concat(variables('namespace'), 'esextlogagent')]",
-                "apiVersion": "2018-06-01",
                 "properties": {
                   "publisher": "Microsoft.EnterpriseCloud.Monitoring",
                   "type": "OmsAgentForLinux",
