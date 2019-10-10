@@ -2046,8 +2046,8 @@
     },
     "kibanaIpTemplateUrl": "[uri(parameters('_artifactsLocation'), concat(variables('kibanaIpTemplates')[variables('topologySettings').kibana], parameters('_artifactsLocationSasToken')))]",
     "logAnalyticsSettings": {
-      "WorkspaceId": "[parameters('logAnalyticsWorkspaceId')]",
-      "WorkspaceKey": "[parameters('logAnalyticsWorkspaceKey')]"
+      "workspaceId": "[parameters('logAnalyticsWorkspaceId')]",
+      "workspaceKey": "[parameters('logAnalyticsWorkspaceKey')]"
     }
   },
   "resources": [
@@ -2221,6 +2221,12 @@
           },
           "elasticTags": {
             "value": "[parameters('elasticTags')]"
+          },
+          "logAnalyticsSettings": {
+            "value": {
+              "workspaceId": "[variables('logAnalyticsSettings').workspaceId]",
+              "workspaceKey": "[variables('logAnalyticsSettings').workspaceKey]"
+            }
           }
         }
       }
