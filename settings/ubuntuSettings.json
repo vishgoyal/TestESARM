@@ -5,7 +5,7 @@
     "_artifactsLocation": {
       "type": "string",
       "metadata": {
-          "description": "The base URI where artifacts required by this template are located including a trailing '/'"
+        "description": "The base URI where artifacts required by this template are located including a trailing '/'"
       }
     },
     "_artifactsLocationSasToken": {
@@ -16,22 +16,22 @@
       "defaultValue": ""
     },
     "esSettings": {
-        "type": "object",
-        "metadata": {
-            "description" : "The Elasticsearch settings"
-        }
+      "type": "object",
+      "metadata": {
+        "description": "The Elasticsearch settings"
+      }
     },
     "commonVmSettings": {
-        "type": "object",
-        "metadata": {
-            "description" : "Shared VM settings"
-        }
+      "type": "object",
+      "metadata": {
+        "description": "Shared VM settings"
+      }
     },
     "topologySettings": {
-        "type": "object",
-        "metadata": {
-            "description": "Aggregate for topology variable"
-        }
+      "type": "object",
+      "metadata": {
+        "description": "Aggregate for topology variable"
+      }
     },
     "networkSettings": {
       "type": "object",
@@ -42,13 +42,13 @@
     "azureCloudStorageAccount": {
       "type": "secureObject",
       "metadata": {
-          "description": "The storage settings for the Azure Cloud plugin"
+        "description": "The storage settings for the Azure Cloud plugin"
       }
     },
     "kibanaIp": {
       "type": "string",
       "metadata": {
-          "description": "The public IP address for Kibana"
+        "description": "The public IP address for Kibana"
       }
     },
     "sharedStorageAccount": {
@@ -64,6 +64,12 @@
       },
       "metadata": {
         "description": "Unique identifiers to allow the Azure Infrastructure to understand the origin of resources deployed to Azure. You do not need to supply a value for this."
+      }
+    },
+    "logAnalyticsSettings": {
+      "type": "object",
+      "metadata": {
+        "description": "Log Analytics Workspace settings"
       }
     }
   },
@@ -213,6 +219,9 @@
           },
           "elasticTags": {
             "value": "[parameters('elasticTags')]"
+          },
+          "logAnalyticsSettings": {
+            "value": "[parameters('logAnalyticsSettings')]"
           }
         }
       }

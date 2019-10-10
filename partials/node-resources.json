@@ -47,6 +47,12 @@
       "metadata": {
         "description": "Unique identifiers to allow the Azure Infrastructure to understand the origin of resources deployed to Azure. You do not need to supply a value for this."
       }
+    },
+    "logAnalyticsSettings": {
+      "type": "object",
+      "metadata": {
+        "description": "Log Analytics Workspace settings"
+      }
     }
   },
   "variables": {
@@ -312,6 +318,9 @@
           },
           "elasticTags": {
             "value": "[parameters('elasticTags')]"
+          },
+          "logAnalyticsSettings": {
+            "value": "[parameters('logAnalyticsSettings')]"
           }
         }
       }
