@@ -1345,6 +1345,20 @@
       "metadata": {
         "description": "The log analytics workspace key that is used for linux extension."
       }
+    },
+    "cerritosOfficeIpAddress": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The ip address of cerritos Office Ip."
+      }
+    },
+    "secondOfficeIpAddress": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The second ip address for access."
+      }
     }
   },
   "variables": {
@@ -1359,6 +1373,7 @@
     },
     "loadBalancerTemplateUrl": "[uri(parameters('_artifactsLocation'), concat('loadbalancers/', variables('loadBalancerOptions')[parameters('loadBalancerType')],'.json', parameters('_artifactsLocationSasToken')))]",
     "osSettingsTemplateUrl": "[uri(parameters('_artifactsLocation'), concat('settings/ubuntuSettings.json', parameters('_artifactsLocationSasToken')))]",
+    "nsgTemplateUrl": "[uri(parameters('_artifactsLocation'), concat('settings/firewallSettings.json', parameters('_artifactsLocationSasToken')))]",
     "location": "[parameters('location')]",
     "azureCloudStorageAccount": {
       "name": "[parameters('azureCloudStorageAccountName')]",
@@ -2048,6 +2063,10 @@
     "logAnalyticsSettings": {
       "workspaceId": "[parameters('logAnalyticsWorkspaceId')]",
       "workspaceKey": "[parameters('logAnalyticsWorkspaceKey')]"
+    },
+    "firewallSettings": {
+      "cerritosOfficeIpAddress": "[parameters('cerritosOfficeIpAddress')]",
+      "secondOfficeIpAddress": "[parameters('secondOfficeIpAddress')]"
     }
   },
   "resources": [
@@ -2227,6 +2246,36 @@
               "workspaceId": "[variables('logAnalyticsSettings').workspaceId]",
               "workspaceKey": "[variables('logAnalyticsSettings').workspaceKey]"
             }
+          }
+        }
+      }
+    },
+    {
+      "name": "firewall-settings",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-05-01",
+      "dependsOn": [
+        "[concat('Microsoft.Resources/deployments/', 'network')]",
+        "[concat('Microsoft.Resources/deployments/', 'loadbalancer')]",
+        "[concat('Microsoft.Resources/deployments/', 'kibana-ip')]",
+        "[concat('Microsoft.Resources/deployments/', 'shared')]",
+        "[concat('Microsoft.Resources/deployments/', 'virtual-machines')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('nsgTemplateUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "networkSecurityGroupsName": {
+            "value": "[concat(variables('commonVmSettings').namespacePrefix, 'nsg')]"
+          },
+          "cerritosOfficeIpAddress": {
+            "value": "[variables('firewallSettings').cerritosOfficeIpAddress]"
+          },
+          "secondOfficeIpAddress": {
+            "value": "[variables('firewallSettings').secondOfficeIpAddress]"
           }
         }
       }

@@ -77,7 +77,7 @@
       },
       "name": "[concat(variables('namespace'), 'vs-set')]",
       "sku": {
-        "name": "Standard_D2",
+        "name": "Standard_DS2_v2",
         "tier": "Standard",
         "capacity": "2"
       },
@@ -126,7 +126,7 @@
                         "subnet": {
                           "id": "[parameters('vm').shared.subnetId]"
                         },
-                      "loadBalancerBackendAddressPools": "[parameters('vm').backendPools]"
+                        "loadBalancerBackendAddressPools": "[parameters('vm').backendPools]"
                       }
                     }
                   ]
