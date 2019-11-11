@@ -75,7 +75,7 @@
         "name": "[concat(variables('namespace'),'vs-loop')]",
         "count": "[variables('vsSetCount')]"
       },
-      "name": "[concat(variables('namespace'), 'vs-set')]",
+      "name": "[concat(variables('namespace'), 'vmss')]",
       "sku": {
         "name": "Standard_DS2_v2",
         "tier": "Standard",
@@ -119,6 +119,7 @@
                 "name": "[concat(variables('namespace'),'nic')]",
                 "properties": {
                   "primary": true,
+                  "enableAcceleratedNetworking": true,
                   "ipConfigurations": [
                     {
                       "name": "[concat(variables('namespace'),'ipConfig')]",

@@ -53,6 +53,13 @@
         "description": "The name of the Elasticsearch cluster"
       }
     },
+    "commonPrefix": {
+      "type": "string",
+      "defaultValue": "es",
+      "metadata": {
+        "description": "The common prefix for different resource names"
+      }
+    },
     "loadBalancerType": {
       "type": "string",
       "defaultValue": "internal",
@@ -1922,20 +1929,20 @@
     "backendPoolConfigurations": {
       "internal": [
         {
-          "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(parameters('vmHostNamePrefix'), 'internal-lb'), 'LBBE')]"
+          "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(variables('networkSettings').namespacePrefix, 'internal-lb'), 'LBBE')]"
         }
       ],
       "external": [
         {
-          "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(parameters('vmHostNamePrefix'), 'internal-lb'), 'LBBE')]"
+          "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(variables('networkSettings').namespacePrefix, 'internal-lb'), 'LBBE')]"
         },
         {
-          "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(parameters('vmHostNamePrefix'), 'external-lb'), 'LBBE')]"
+          "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(variables('networkSettings').namespacePrefix, 'external-lb'), 'LBBE')]"
         }
       ],
       "gateway": [
         {
-          "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(parameters('vmHostNamePrefix'), 'internal-lb'), 'LBBE')]"
+          "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', concat(variables('networkSettings').namespacePrefix, 'internal-lb'), 'LBBE')]"
         }
       ]
     },
@@ -2014,7 +2021,7 @@
     },
     "networkSettings": {
       "name": "[parameters('vNetName')]",
-      "namespacePrefix": "[parameters('vmHostNamePrefix')]",
+      "namespacePrefix": "[concat(parameters('commonPrefix'),'-')]",
       "resourceGroup": "[variables('networkResourceGroupMap')[parameters('vNetNewOrExisting')]]",
       "location": "[variables('location')]",
       "addressPrefix": "[parameters('vNetNewAddressPrefix')]",
@@ -2269,7 +2276,7 @@
         },
         "parameters": {
           "networkSecurityGroupsName": {
-            "value": "[concat(variables('commonVmSettings').namespacePrefix, 'nsg')]"
+            "value": "[concat(parameters('commonPrefix'), '-nsg')]"
           },
           "cerritosOfficeIpAddress": {
             "value": "[variables('firewallSettings').cerritosOfficeIpAddress]"
