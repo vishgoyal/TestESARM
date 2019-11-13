@@ -53,20 +53,20 @@
                     },
                     {
                         "name": "Kibana-VPN",
-                        "properties": {
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "5601",
-                            "sourceAddressPrefix": "[parameters('VPNIpAddress')]",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 210,
-                            "direction": "Inbound",
-                            "sourcePortRanges": [],
-                            "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [],
-                            "destinationAddressPrefixes": []
-                        }
+                      "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "5601",
+                        "sourceAddressPrefix": "[parameters('officeVPNIpAddress')]",
+                        "destinationAddressPrefix": "*",
+                        "access": "Allow",
+                        "priority": 210,
+                        "direction": "Inbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                      }
                     },
                     {
                         "name": "AllowElasticCluster",
@@ -121,37 +121,37 @@
                     },
                     {
                         "name": "AllowSSH-VPN",
-                        "properties": {
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "22-27",
-                            "sourceAddressPrefix": "[parameters('VPNIpAddress')]",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 250,
-                            "direction": "Inbound",
-                            "sourcePortRanges": [],
-                            "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [],
-                            "destinationAddressPrefixes": []
-                        }
+                      "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "22-27",
+                        "sourceAddressPrefix": "[parameters('officeVPNIpAddress')]",
+                        "destinationAddressPrefix": "*",
+                        "access": "Allow",
+                        "priority": 250,
+                        "direction": "Inbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                      }
                     },
                     {
                         "name": "AllowElasticClient-VPN",
-                        "properties": {
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "9200-9201",
-                            "sourceAddressPrefix": "[parameters('VPNIpAddress')]",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 260,
-                            "direction": "Inbound",
-                            "sourcePortRanges": [],
-                            "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [],
-                            "destinationAddressPrefixes": []
-                        }
+                      "properties": {
+                        "protocol": "*",
+                        "sourcePortRange": "*",
+                        "destinationPortRange": "9200-9201",
+                        "sourceAddressPrefix": "[parameters('officeVPNIpAddress')]",
+                        "destinationAddressPrefix": "*",
+                        "access": "Allow",
+                        "priority": 260,
+                        "direction": "Inbound",
+                        "sourcePortRanges": [],
+                        "destinationPortRanges": [],
+                        "sourceAddressPrefixes": [],
+                        "destinationAddressPrefixes": []
+                      }
                     },
                     {
                         "name": "AllowElasticClient-office",
@@ -224,20 +224,20 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupsName'))]"
             ],
-            "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "9200",
-                "sourceAddressPrefix": "[parameters('VPNIpAddress')]",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 260,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-            }
+          "properties": {
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "9200",
+            "sourceAddressPrefix": "[parameters('officeVPNIpAddress')]",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 260,
+            "direction": "Inbound",
+            "sourcePortRanges": [],
+            "destinationPortRanges": [],
+            "sourceAddressPrefixes": [],
+            "destinationAddressPrefixes": []
+          }
         },
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
@@ -290,20 +290,20 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupsName'))]"
             ],
-            "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "22-27",
-                "sourceAddressPrefix": "[parameters('VPNIpAddress')]",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 250,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-            }
+          "properties": {
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "22-27",
+            "sourceAddressPrefix": "[parameters('officeVPNIpAddress')]",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 250,
+            "direction": "Inbound",
+            "sourcePortRanges": [],
+            "destinationPortRanges": [],
+            "sourceAddressPrefixes": [],
+            "destinationAddressPrefixes": []
+          }
         },
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
@@ -335,20 +335,20 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupsName'))]"
             ],
-            "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "5601",
-                "sourceAddressPrefix": "[parameters('VPNIpAddress')]",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 210,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-            }
+          "properties": {
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "5601",
+            "sourceAddressPrefix": "[parameters('officeVPNIpAddress')]",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 210,
+            "direction": "Inbound",
+            "sourcePortRanges": [],
+            "destinationPortRanges": [],
+            "sourceAddressPrefixes": [],
+            "destinationAddressPrefixes": []
+          }
         }
     ]
 }
