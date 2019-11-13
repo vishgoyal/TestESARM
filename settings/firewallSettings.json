@@ -308,7 +308,7 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2019-08-01",
-            "name": "[concat(parameters('networkSecurityGroupsName'), '/Kibana')]",
+            "name": "[concat(parameters('networkSecurityGroupsName'), '/Kibana-Office')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupsName'))]"
             ],
@@ -331,7 +331,7 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2019-08-01",
-            "name": "[concat(parameters('networkSecurityGroupsName'), '/Kibana_Home')]",
+            "name": "[concat(parameters('networkSecurityGroupsName'), '/Kibana-VPN')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupsName'))]"
             ],
