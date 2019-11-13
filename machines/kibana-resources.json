@@ -20,6 +20,12 @@
         "description": "Network settings"
       }
     },
+    "networkSecurityGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "Network security group name"
+      }
+    },
     "credentials": {
       "type": "secureObject",
       "metadata": {
@@ -64,10 +70,10 @@
     "namespace": "[parameters('namespace')]",
     "subnetId": "[resourceId(parameters('networkSettings').resourceGroup, 'Microsoft.Network/virtualNetworks/subnets', parameters('networkSettings').name, parameters('networkSettings').subnet.name)]",
     "publicIpName": "[concat(variables('namespace'), '-ip')]",
-    "securityGroupName": "[concat(variables('namespace'), '-nsg')]",
+    "securityGroupName": "[parameters('networkSecurityGroupName')]",
     "nicName": "[concat(variables('namespace'), '-nic')]",
     "password_osProfile": {
-      "computername": "[concat(parameters('namespace'), '-vm')]",
+      "computername": "[concat(parameters('namespace'))]",
       "adminUsername": "[parameters('credentials').adminUsername]",
       "adminPassword": "[parameters('credentials').password]"
     },
@@ -83,7 +89,7 @@
               "keyData": "[parameters('credentials').sshPublicKey]"
             }
           ]
-      }
+        }
       }
     },
     "osProfile": "[variables(concat(parameters('credentials').authenticationType, '_osProfile'))]"

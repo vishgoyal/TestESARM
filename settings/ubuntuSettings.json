@@ -39,6 +39,12 @@
         "description": "Network settings"
       }
     },
+    "networkSecurityGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "Network security group name"
+      }
+    },
     "azureCloudStorageAccount": {
       "type": "secureObject",
       "metadata": {
@@ -216,6 +222,9 @@
           },
           "networkSettings": {
             "value": "[parameters('networkSettings')]"
+          },
+          "networkSecurityGroupName": {
+            "value": "[parameters('networkSecurityGroupName')]"
           },
           "elasticTags": {
             "value": "[parameters('elasticTags')]"

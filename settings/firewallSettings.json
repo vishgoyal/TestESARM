@@ -8,13 +8,13 @@
         "description": "The name of network security group for the firewall settings"
       }
     },
-    "cerritosOfficeIpAddress": {
+    "officeIpAddress": {
       "type": "string",
       "metadata": {
-        "description": "The ip address of cerritos Office Ip"
+        "description": "The ip address of  Office Ip"
       }
     },
-    "secondOfficeIpAddress": {
+    "officeVPNIpAddress": {
       "type": "string",
       "metadata": {
         "description": "The second ip address for access"
@@ -34,13 +34,13 @@
             "properties": {
                 "securityRules": [
                     {
-                        "name": "Kibana",
+                        "name": "Kibana-Office",
                       "properties": {
                         "description": "Allows inbound Kibana HTTP traffic from office",
                         "protocol": "TCP",
                         "sourcePortRange": "*",
                         "destinationPortRange": "5601",
-                        "sourceAddressPrefix": "[parameters('cerritosOfficeIpAddress')]",
+                        "sourceAddressPrefix": "[parameters('officeIpAddress')]",
                         "destinationAddressPrefix": "*",
                         "access": "Allow",
                         "priority": 200,
@@ -52,12 +52,12 @@
                       }
                     },
                     {
-                        "name": "Kibana_Home",
+                        "name": "Kibana-VPN",
                         "properties": {
                             "protocol": "*",
                             "sourcePortRange": "*",
                             "destinationPortRange": "5601",
-                            "sourceAddressPrefix": "[parameters('secondOfficeIpAddress')]",
+                            "sourceAddressPrefix": "[parameters('VPNIpAddress')]",
                             "destinationAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 210,
@@ -103,12 +103,12 @@
                         }
                     },
                     {
-                        "name": "AllowSSH-CerritosOffice",
+                        "name": "AllowSSH-Office",
                         "properties": {
                             "protocol": "*",
                             "sourcePortRange": "*",
                             "destinationPortRange": "22-27",
-                            "sourceAddressPrefix": "[parameters('cerritosOfficeIpAddress')]",
+                            "sourceAddressPrefix": "[parameters('officeIpAddress')]",
                             "destinationAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 240,
@@ -120,12 +120,12 @@
                         }
                     },
                     {
-                        "name": "AllowSSH-JaredHome",
+                        "name": "AllowSSH-VPN",
                         "properties": {
                             "protocol": "*",
                             "sourcePortRange": "*",
                             "destinationPortRange": "22-27",
-                            "sourceAddressPrefix": "[parameters('secondOfficeIpAddress')]",
+                            "sourceAddressPrefix": "[parameters('VPNIpAddress')]",
                             "destinationAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 250,
@@ -137,12 +137,12 @@
                         }
                     },
                     {
-                        "name": "AllowElasticClient-JaredHome",
+                        "name": "AllowElasticClient-VPN",
                         "properties": {
                             "protocol": "*",
                             "sourcePortRange": "*",
-                            "destinationPortRange": "9200",
-                            "sourceAddressPrefix": "[parameters('secondOfficeIpAddress')]",
+                            "destinationPortRange": "9200-9201",
+                            "sourceAddressPrefix": "[parameters('VPNIpAddress')]",
                             "destinationAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 260,
@@ -154,12 +154,12 @@
                         }
                     },
                     {
-                        "name": "AllowElasticClient-CerritosOffice",
+                        "name": "AllowElasticClient-office",
                         "properties": {
                             "protocol": "*",
                             "sourcePortRange": "*",
-                            "destinationPortRange": "9200",
-                            "sourceAddressPrefix": "[parameters('cerritosOfficeIpAddress')]",
+                            "destinationPortRange": "9200-9201",
+                            "sourceAddressPrefix": "[parameters('officeIpAddress')]",
                             "destinationAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 270,
@@ -198,7 +198,7 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2019-08-01",
-            "name": "[concat(parameters('networkSecurityGroupsName'), '/AllowElasticClient-CerritosOffice')]",
+            "name": "[concat(parameters('networkSecurityGroupsName'), '/AllowElasticClient-office')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupsName'))]"
             ],
@@ -206,7 +206,7 @@
                 "protocol": "*",
                 "sourcePortRange": "*",
                 "destinationPortRange": "9200",
-                "sourceAddressPrefix": "[parameters('cerritosOfficeIpAddress')]",
+                "sourceAddressPrefix": "[parameters('officeIpAddress')]",
                 "destinationAddressPrefix": "*",
                 "access": "Allow",
                 "priority": 270,
@@ -220,7 +220,7 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2019-08-01",
-            "name": "[concat(parameters('networkSecurityGroupsName'), '/AllowElasticClient-JaredHome')]",
+            "name": "[concat(parameters('networkSecurityGroupsName'), '/AllowElasticClient-VPN')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupsName'))]"
             ],
@@ -228,7 +228,7 @@
                 "protocol": "*",
                 "sourcePortRange": "*",
                 "destinationPortRange": "9200",
-                "sourceAddressPrefix": "[parameters('secondOfficeIpAddress')]",
+                "sourceAddressPrefix": "[parameters('VPNIpAddress')]",
                 "destinationAddressPrefix": "*",
                 "access": "Allow",
                 "priority": 260,
@@ -264,7 +264,7 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2019-08-01",
-            "name": "[concat(parameters('networkSecurityGroupsName'), '/AllowSSH-CerritosOffice')]",
+            "name": "[concat(parameters('networkSecurityGroupsName'), '/AllowSSH-office')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupsName'))]"
             ],
@@ -272,7 +272,7 @@
                 "protocol": "*",
                 "sourcePortRange": "*",
                 "destinationPortRange": "22-27",
-                "sourceAddressPrefix": "[parameters('cerritosOfficeIpAddress')]",
+                "sourceAddressPrefix": "[parameters('officeIpAddress')]",
                 "destinationAddressPrefix": "*",
                 "access": "Allow",
                 "priority": 240,
@@ -286,7 +286,7 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2019-08-01",
-            "name": "[concat(parameters('networkSecurityGroupsName'), '/AllowSSH-JaredHome')]",
+            "name": "[concat(parameters('networkSecurityGroupsName'), '/AllowSSH-VPN')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupsName'))]"
             ],
@@ -294,7 +294,7 @@
                 "protocol": "*",
                 "sourcePortRange": "*",
                 "destinationPortRange": "22-27",
-                "sourceAddressPrefix": "[parameters('secondOfficeIpAddress')]",
+                "sourceAddressPrefix": "[parameters('VPNIpAddress')]",
                 "destinationAddressPrefix": "*",
                 "access": "Allow",
                 "priority": 250,
@@ -317,7 +317,7 @@
                 "protocol": "TCP",
                 "sourcePortRange": "*",
                 "destinationPortRange": "5601",
-                "sourceAddressPrefix": "[parameters('cerritosOfficeIpAddress')]",
+                "sourceAddressPrefix": "[parameters('officeIpAddress')]",
                 "destinationAddressPrefix": "*",
                 "access": "Allow",
                 "priority": 200,
@@ -339,7 +339,7 @@
                 "protocol": "*",
                 "sourcePortRange": "*",
                 "destinationPortRange": "5601",
-                "sourceAddressPrefix": "[parameters('secondOfficeIpAddress')]",
+                "sourceAddressPrefix": "[parameters('VPNIpAddress')]",
                 "destinationAddressPrefix": "*",
                 "access": "Allow",
                 "priority": 210,

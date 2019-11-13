@@ -39,6 +39,12 @@
         "description": "Network settings"
       }
     },
+    "networkSecurityGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "Network security group name"
+      }
+    },
     "elasticTags": {
       "type": "object",
       "defaultValue": {
@@ -390,6 +396,9 @@
           },
           "acceleratedNetworking": {
             "value": "[if(equals(parameters('topologySettings').vmKibanaAcceleratedNetworking, 'Default'), if(contains(variables('vmAcceleratedNetworking'), parameters('topologySettings').vmSizeKibana), 'Yes', 'No'), parameters('topologySettings').vmKibanaAcceleratedNetworking)]"
+          },
+          "networkSecurityGroupName": {
+            "value": "[parameters('networkSecurityGroupName')]"
           },
           "elasticTags": {
             "value": "[parameters('elasticTags')]"

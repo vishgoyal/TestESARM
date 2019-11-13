@@ -62,7 +62,7 @@
     },
     "loadBalancerType": {
       "type": "string",
-      "defaultValue": "internal",
+      "defaultValue": "external",
       "allowedValues": [
         "internal",
         "external",
@@ -1353,14 +1353,14 @@
         "description": "The log analytics workspace key that is used for linux extension."
       }
     },
-    "cerritosOfficeIpAddress": {
+    "officeIpAddress": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
-        "description": "The ip address of cerritos Office Ip."
+        "description": "The ip address of Office Ip."
       }
     },
-    "secondOfficeIpAddress": {
+    "officeVPNIpAddress": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
@@ -1381,6 +1381,7 @@
     "loadBalancerTemplateUrl": "[uri(parameters('_artifactsLocation'), concat('loadbalancers/', variables('loadBalancerOptions')[parameters('loadBalancerType')],'.json', parameters('_artifactsLocationSasToken')))]",
     "osSettingsTemplateUrl": "[uri(parameters('_artifactsLocation'), concat('settings/ubuntuSettings.json', parameters('_artifactsLocationSasToken')))]",
     "nsgTemplateUrl": "[uri(parameters('_artifactsLocation'), concat('settings/firewallSettings.json', parameters('_artifactsLocationSasToken')))]",
+    "networkSecurityGroupName": "[concat(parameters('commonPrefix'),'-nsg')]",
     "location": "[parameters('location')]",
     "azureCloudStorageAccount": {
       "name": "[parameters('azureCloudStorageAccountName')]",
@@ -2072,8 +2073,8 @@
       "workspaceKey": "[parameters('logAnalyticsWorkspaceKey')]"
     },
     "firewallSettings": {
-      "cerritosOfficeIpAddress": "[parameters('cerritosOfficeIpAddress')]",
-      "secondOfficeIpAddress": "[parameters('secondOfficeIpAddress')]"
+      "officeIpAddress": "[parameters('officeIpAddress')]",
+      "officeVPNIpAddress": "[parameters('officeVPNIpAddress')]"
     }
   },
   "resources": [
@@ -2133,6 +2134,9 @@
           },
           "loadBalancerType": {
             "value": "[parameters('loadBalancerType')]"
+          },
+          "networkSecurityGroupName": {
+            "value": "[variables('networkSecurityGroupName')]"
           },
           "elasticTags": {
             "value": "[parameters('elasticTags')]"
@@ -2226,6 +2230,9 @@
           "networkSettings": {
             "value": "[variables('networkSettings')]"
           },
+          "networkSecurityGroupName": {
+            "value": "[variables('networkSecurityGroupName')]"
+          },
           "azureCloudStorageAccount": {
             "value": {
               "name": "[variables('azureCloudStorageAccount').name]",
@@ -2278,11 +2285,11 @@
           "networkSecurityGroupsName": {
             "value": "[concat(parameters('commonPrefix'), '-nsg')]"
           },
-          "cerritosOfficeIpAddress": {
-            "value": "[variables('firewallSettings').cerritosOfficeIpAddress]"
+          "officeIpAddress": {
+            "value": "[variables('firewallSettings').officeIpAddress]"
           },
-          "secondOfficeIpAddress": {
-            "value": "[variables('firewallSettings').secondOfficeIpAddress]"
+          "officeVPNIpAddress": {
+            "value": "[variables('firewallSettings').officeVPNIpAddress]"
           }
         }
       }

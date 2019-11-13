@@ -20,6 +20,12 @@
         "description": "Set up an internal or external load balancer, or use Application Gateway (gateway) for load balancing and SSL offload. If you are setting up Elasticsearch on a publicly available endpoint, it is *strongly recommended* to secure your nodes with a product like Elastic's X-Pack Security"
       }
     },
+    "networkSecurityGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "Network security group name"
+      }
+    },
     "elasticTags": {
       "type": "object",
       "defaultValue": {
@@ -36,13 +42,19 @@
         {
           "name": "[parameters('networkSettings').subnet.name]",
           "properties": {
-            "addressPrefix": "[parameters('networkSettings').subnet.addressPrefix]"
+            "addressPrefix": "[parameters('networkSettings').subnet.addressPrefix]",
+            "networkSecurityGroup": {
+              "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+            }
           }
         },
         {
           "name": "[parameters('networkSettings').applicationGatewaySubnet.name]",
           "properties": {
-            "addressPrefix": "[parameters('networkSettings').applicationGatewaySubnet.addressPrefix]"
+            "addressPrefix": "[parameters('networkSettings').applicationGatewaySubnet.addressPrefix]",
+            "networkSecurityGroup": {
+              "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+            }
           }
         }
       ],
@@ -50,7 +62,10 @@
         {
           "name": "[parameters('networkSettings').subnet.name]",
           "properties": {
-            "addressPrefix": "[parameters('networkSettings').subnet.addressPrefix]"
+            "addressPrefix": "[parameters('networkSettings').subnet.addressPrefix]",
+            "networkSecurityGroup": {
+              "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+            }
           }
         }
       ]
@@ -59,10 +74,37 @@
   },
   "resources": [
     {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[parameters('networkSecurityGroupName')]",
+      "location": "[parameters('networkSettings').location]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "first_rule",
+            "properties": {
+              "description": "This is the first test rule, will be overwritten",
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "24.9.162.133",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 123,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    },
+    {
       "apiVersion": "2019-04-01",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('networkSettings').name]",
       "location": "[parameters('networkSettings').location]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName'))]"
+      ],
       "tags": {
         "provider": "[toUpper(parameters('elasticTags').provider)]"
       },
