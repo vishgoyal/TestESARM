@@ -1167,6 +1167,10 @@ configure_elasticsearch_yaml()
       } >> $ES_CONF
       log "[configure_elasticsearch_yaml] configured SAML realm"
     fi
+
+    # enable monitoring collection by default
+	echo "xpack.monitoring.collection.enabled: true" >> $ES_CONF
+
 }
 
 configure_elasticsearch()

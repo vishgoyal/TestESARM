@@ -127,7 +127,7 @@
         "Yes",
         "No"
       ],
-      "defaultValue": "Yes",
+      "defaultValue": "No",
       "metadata": {
         "description": "Install a trial license to enable access to the Elastic Stack platinum features for 30 days. For Elastisearch less than version 6.3.0, a value of 'Yes' enables these features by installing the X-Pack plugin into each deployed Elastic Stack product. For Elastisearch less than version 6.3.0, a value of 'No' does not install the X-Pack plugin and the Elastic Stack is deployed with features available under OSS. For Elasticsearch 6.3.0+, a value of 'No' deploys the Elastic Stack with the basic license level features available."
       }
