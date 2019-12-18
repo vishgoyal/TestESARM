@@ -79,7 +79,7 @@
       "sku": {
         "name": "Standard_DS2_v2",
         "tier": "Standard",
-        "capacity": "2"
+        "capacity": "[parameters('vm').count]"
       },
       "properties": {
         "overprovision": "true",
