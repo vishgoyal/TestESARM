@@ -1947,11 +1947,17 @@
         }
       ]
     },
+    "natPoolConfiguration": [
+      {
+        "id": "[resourceId('Microsoft.Network/loadBalancers/inboundNatPools', concat(variables('networkSettings').namespacePrefix, 'external-lb'), 'LBBEAddrNatPool')]"
+      }
+    ],
     "lbBackEndPoolsAdded": {
       "backendPools": "[variables('backendPoolConfigurations')[parameters('loadBalancerType')]]"
     },
     "lbBackendPoolsRemoved": {
-      "backendPools": []
+      "backendPools": [
+      ]
     },
     "dataLoadBalancerOptions": [
       "[variables('lbBackEndPoolsAdded')]",
@@ -2018,7 +2024,8 @@
         "dataDisks": "[variables('resolvedDataDiskCount')]"
       },
       "dataLoadBalancerBackEndPools": "[variables('dataLoadBalancerOptions')[variables('clientResourceIndex')].backendPools]",
-      "loadBalancerBackEndPools": "[variables('lbBackEndPoolsAdded').backendPools]"
+      "loadBalancerBackEndPools": "[variables('lbBackEndPoolsAdded').backendPools]",
+      "loadBalancerNatPools": "[variables('natPoolConfiguration')]"
     },
     "networkSettings": {
       "name": "[parameters('vNetName')]",
@@ -2087,7 +2094,8 @@
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
           "contentVersion": "1.0.0.0",
-          "resources": []
+          "resources": [
+          ]
         }
       }
     },
@@ -2290,6 +2298,9 @@
           },
           "officeVPNIpAddress": {
             "value": "[variables('firewallSettings').officeVPNIpAddress]"
+          },
+          "location": {
+            "value": "[variables('networkSettings').location]"
           }
         }
       }

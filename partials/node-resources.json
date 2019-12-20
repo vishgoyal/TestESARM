@@ -313,6 +313,7 @@
               "storageAccountType": "[parameters('topologySettings').vmDataNodeStorageAccountType]",
               "count": "[parameters('topologySettings').vmDataNodeCount]",
               "backendPools": "[parameters('topologySettings').dataLoadBalancerBackEndPools]",
+              "natPools": "[parameters('topologySettings').loadBalancerNatPools]",
               "imageReference": "[parameters('osSettings').imageReference]",
               "platformFaultDomainCount": "[variables('platformFaultDomainCount')]",
               "acceleratedNetworking": "[if(equals(parameters('topologySettings').vmDataNodeAcceleratedNetworking, 'Default'), if(contains(variables('vmAcceleratedNetworking'), parameters('topologySettings').vmSizeDataNodes), 'Yes', 'No'), parameters('topologySettings').vmDataNodeAcceleratedNetworking)]",

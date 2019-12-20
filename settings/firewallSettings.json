@@ -19,6 +19,12 @@
       "metadata": {
         "description": "The second ip address for access"
       }
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "The location of the Network Security Group"
+      }
     }
   },
     "variables": {},
@@ -27,7 +33,7 @@
         "type": "Microsoft.Network/networkSecurityGroups",
         "apiVersion": "2019-08-01",
         "name": "[parameters('networkSecurityGroupsName')]",
-        "location": "centralus",
+        "location": "[parameters('location')]",
         "tags": {
           "provider": "648D2193-0CE0-4EFB-8A82-AF9792184FD9"
         },

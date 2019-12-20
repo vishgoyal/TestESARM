@@ -30,7 +30,8 @@
     "dataDisks": {
       "type": "object",
       "defaultValue": {
-        "disks": []
+        "disks": [
+        ]
       },
       "metadata": {
         "description": "additional data disks to attach"
@@ -127,7 +128,8 @@
                         "subnet": {
                           "id": "[parameters('vm').shared.subnetId]"
                         },
-                        "loadBalancerBackendAddressPools": "[parameters('vm').backendPools]"
+                        "loadBalancerBackendAddressPools": "[parameters('vm').backendPools]",
+                        "loadBalancerInboundNatPools": "[parameters('vm').NatPools]"
                       }
                     }
                   ]
@@ -135,7 +137,6 @@
               }
             ]
           },
-
           "extensionProfile": {
             "extensions": [
               {
