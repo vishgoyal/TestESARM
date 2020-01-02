@@ -203,7 +203,7 @@
                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('externalLoadBalancerName')), '/frontendIPConfigurations/LBFE')]"
               },
               "protocol": "tcp",
-              "frontendPortRangeStart": "50000",
+              "frontendPortRangeStart": "50001",
               "frontendPortRangeEnd": "50119",
               "backendPort": "22"
             }

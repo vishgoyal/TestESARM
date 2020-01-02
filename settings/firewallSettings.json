@@ -1,6 +1,6 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
   "parameters": {
     "networkSecurityGroupsName": {
       "type": "string",
@@ -27,157 +27,212 @@
       }
     }
   },
-    "variables": {},
-    "resources": [
-      {
-        "type": "Microsoft.Network/networkSecurityGroups",
-        "apiVersion": "2019-08-01",
-        "name": "[parameters('networkSecurityGroupsName')]",
-        "location": "[parameters('location')]",
-        "tags": {
-          "provider": "648D2193-0CE0-4EFB-8A82-AF9792184FD9"
-        },
-        "properties": {
-          "securityRules": [
-            {
-              "name": "Kibana-Office",
-              "properties": {
-                "description": "Allows inbound Kibana HTTP traffic from office",
-                "protocol": "TCP",
-                "sourcePortRange": "*",
-                "destinationPortRange": "5601",
-                "sourceAddressPrefix": "[parameters('officeIpAddress')]",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 200,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-              }
-            },
-            {
-              "name": "Kibana-VPN",
-              "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "5601",
-                "sourceAddressPrefix": "[parameters('officeVPNIpAddress')]",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 210,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-              }
-            },
-            {
-              "name": "AllowElasticCluster",
-              "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "9300-9400",
-                "sourceAddressPrefix": "VirtualNetwork",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 220,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-              }
-            },
-            {
-              "name": "AllowElasticClient",
-              "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "9200-9299",
-                "sourceAddressPrefix": "VirtualNetwork",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 230,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-              }
-            },
-            {
-              "name": "AllowSSH-Office",
-              "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "22-27",
-                "sourceAddressPrefix": "[parameters('officeIpAddress')]",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 240,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-              }
-            },
-            {
-              "name": "AllowSSH-VPN",
-              "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "22-27",
-                "sourceAddressPrefix": "[parameters('officeVPNIpAddress')]",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 250,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-              }
-            },
-            {
-              "name": "AllowElasticClient-Office",
-              "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "9200-9201",
-                "sourceAddressPrefix": "[parameters('officeIpAddress')]",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 260,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-              }
-            },
-            {
-              "name": "AllowElasticClient-VPN",
-              "properties": {
-                "protocol": "*",
-                "sourcePortRange": "*",
-                "destinationPortRange": "9200-9201",
-                "sourceAddressPrefix": "[parameters('officeVPNIpAddress')]",
-                "destinationAddressPrefix": "*",
-                "access": "Allow",
-                "priority": 270,
-                "direction": "Inbound",
-                "sourcePortRanges": [],
-                "destinationPortRanges": [],
-                "sourceAddressPrefixes": [],
-                "destinationAddressPrefixes": []
-              }
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2019-08-01",
+      "name": "[parameters('networkSecurityGroupsName')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "provider": "648D2193-0CE0-4EFB-8A82-AF9792184FD9"
+      },
+      "properties": {
+        "securityRules": [
+          {
+            "name": "testing",
+            "properties": {
+              "description": "allow all",
+              "protocol": "TCP",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 2111,
+              "direction": "Inbound",
+              "sourcePortRanges": [
+              ],
+              "destinationPortRanges": [
+              ],
+              "sourceAddressPrefixes": [
+              ],
+              "destinationAddressPrefixes": [
+              ]
             }
-          ]
-        }
+          },
+          {
+            "name": "Kibana-Office",
+            "properties": {
+              "description": "Allows inbound Kibana HTTP traffic from office",
+              "protocol": "TCP",
+              "sourcePortRange": "*",
+              "destinationPortRange": "5601",
+              "sourceAddressPrefix": "[parameters('officeIpAddress')]",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 200,
+              "direction": "Inbound",
+              "sourcePortRanges": [
+              ],
+              "destinationPortRanges": [
+              ],
+              "sourceAddressPrefixes": [
+              ],
+              "destinationAddressPrefixes": [
+              ]
+            }
+          },
+          {
+            "name": "Kibana-VPN",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "5601",
+              "sourceAddressPrefix": "[parameters('officeVPNIpAddress')]",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 210,
+              "direction": "Inbound",
+              "sourcePortRanges": [
+              ],
+              "destinationPortRanges": [
+              ],
+              "sourceAddressPrefixes": [
+              ],
+              "destinationAddressPrefixes": [
+              ]
+            }
+          },
+          {
+            "name": "AllowElasticCluster",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "9300-9400",
+              "sourceAddressPrefix": "VirtualNetwork",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 220,
+              "direction": "Inbound",
+              "sourcePortRanges": [
+              ],
+              "destinationPortRanges": [
+              ],
+              "sourceAddressPrefixes": [
+              ],
+              "destinationAddressPrefixes": [
+              ]
+            }
+          },
+          {
+            "name": "AllowElasticClient",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "9200-9299",
+              "sourceAddressPrefix": "VirtualNetwork",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 230,
+              "direction": "Inbound",
+              "sourcePortRanges": [
+              ],
+              "destinationPortRanges": [
+              ],
+              "sourceAddressPrefixes": [
+              ],
+              "destinationAddressPrefixes": [
+              ]
+            }
+          },
+          {
+            "name": "AllowSSH-Office",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22-27",
+              "sourceAddressPrefix": "[parameters('officeIpAddress')]",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 240,
+              "direction": "Inbound",
+              "sourcePortRanges": [
+              ],
+              "destinationPortRanges": [
+              ],
+              "sourceAddressPrefixes": [
+              ],
+              "destinationAddressPrefixes": [
+              ]
+            }
+          },
+          {
+            "name": "AllowSSH-VPN",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22-27",
+              "sourceAddressPrefix": "[parameters('officeVPNIpAddress')]",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 250,
+              "direction": "Inbound",
+              "sourcePortRanges": [
+              ],
+              "destinationPortRanges": [
+              ],
+              "sourceAddressPrefixes": [
+              ],
+              "destinationAddressPrefixes": [
+              ]
+            }
+          },
+          {
+            "name": "AllowElasticClient-Office",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "9200-9201",
+              "sourceAddressPrefix": "[parameters('officeIpAddress')]",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 260,
+              "direction": "Inbound",
+              "sourcePortRanges": [
+              ],
+              "destinationPortRanges": [
+              ],
+              "sourceAddressPrefixes": [
+              ],
+              "destinationAddressPrefixes": [
+              ]
+            }
+          },
+          {
+            "name": "AllowElasticClient-VPN",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "9200-9201",
+              "sourceAddressPrefix": "[parameters('officeVPNIpAddress')]",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 270,
+              "direction": "Inbound",
+              "sourcePortRanges": [
+              ],
+              "destinationPortRanges": [
+              ],
+              "sourceAddressPrefixes": [
+              ],
+              "destinationAddressPrefixes": [
+              ]
+            }
+          }
+        ]
       }
-    ]
+    }
+  ]
 }

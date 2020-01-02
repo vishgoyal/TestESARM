@@ -80,10 +80,10 @@
       "sku": {
         "name": "Standard_DS2_v2",
         "tier": "Standard",
-        "capacity": "[parameters('vm').count]"
+        "capacity": "3"
       },
       "properties": {
-        "overprovision": "true",
+        "overprovision": "false",
         "upgradePolicy": {
           "mode": "Manual"
         },
@@ -110,7 +110,7 @@
             ]
           },
           "osProfile": {
-            "computerNamePrefix": "data-",
+            "computerNamePrefix": "[parameters('vm').namespace]",
             "adminUsername": "[parameters('vm').shared.credentials.adminUsername]",
             "adminPassword": "[parameters('vm').shared.credentials.password]"
           },
